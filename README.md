@@ -1,8 +1,10 @@
 # general_type_linked_list_library
 General-Type Linked List Library written in C 
 <br>
+The type can be choosen by setting to 1 the corresponding _define_ directive in the header file, and set to 0 all others
 <br>
-The type can be choosen by changing the statement _typedef int TYPE_ in the C header file with another type between:
+<br>
+Currently, the supported data types are:
 - char
 - short int
 - int
