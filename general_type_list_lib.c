@@ -19,17 +19,6 @@
  *      looks like this:
  *              
  *      (elem1.val) -> (elem2.val) -> (elem3.val)
- * 
- *  NOTE: 
- *  -   The commented printf() functions are the ones that only allow integers to be displayed, they
- *      are instead replaced with the general-type printf(), which uses the custom str_concat() function
- *      to correctly replace the format parameter in the output string, so that it corresponds to the 
- *      correct format parameter type.
- * 
- *  -   (Example) 
- *      -   If type selected is int  -> %d is used in printf() output format string
- *      -   If type selected is char -> %c is used in printf() output format string
- *      -   etc...
  */
 void output_list(list_t *head)
 {
