@@ -23,8 +23,6 @@
  *	- 	To change the type, just put the corresponding
  *		define directive to 1 and the others to 0 
  */
-
-/* CHAR: Problem with scanf with the str terminator char '\0' - It gets read instead of an actual input */
 #define IS_CHAR 0
 #define IS_SHORT_INT 0
 #define IS_INT 1
