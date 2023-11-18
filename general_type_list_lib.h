@@ -71,8 +71,8 @@
 	/* 
 	 *	These aren't compiled, due to the error being thrown up here, they are
 	 * 	just needed to remove compiler errors and as a fallback default option
-	 */
-	char FORMAT[] = "%d";
+	 */	
+	#define FORMAT "%d"
 	typedef int TYPE;
 #endif
 
