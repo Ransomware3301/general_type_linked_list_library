@@ -411,63 +411,56 @@ list_t * string_to_list(char *str, char *sep)
 {
     list_t *head;
     char *temp_str;
-    int temp_str_dim, sep_len;
+    int temp_str_dim, sep_len, str_len;
     int r, l, i;
+    bool_t end;
 
 
     head = NULL;
 
     if ( str && sep )
     {
-        /* 
-         *  Example of left-right sizing:
-         *      l       r
-         *      |       |
-         *      H e l l o \0
-         * 
-         *      str_len = r - l + 1;
-         */
-
         r = 0;
         l = 0;
+        str_len = strlen(str);
         sep_len = strlen(sep);
+        end = false;
 
-        while ( *(str + r) != '\0' )
+        while ( r < str_len && *(str + r) != '\0' )
         {
-            i = 0;
+            end = (*(str + r + 1) == '\0');
 
-            if ( *(str + r + i) == *(sep + i) )
+            if ( !end )
             {
-                do
+                i = 0;
+
+                while ( (r + i) < str_len &&  i < sep_len && *(str + r + i) == *(sep + i) )
                 {
                     i++;
-                } while (*(str + r + i) == *(sep + i) && i < sep_len);
+                }
+            }
 
-                if (i == sep_len)
+            if (i == sep_len || end == true)
+            {
+                temp_str_dim = r - l + (end ? 1 : 0);
+
+                if (( temp_str = (char *)malloc(sizeof(char) * (temp_str_dim + 1)) ))
                 {
-                    temp_str_dim = r - l + 1;
-
-                    if (( temp_str = (char *)malloc(sizeof(char) * temp_str_dim) ))
+                    for (i = 0; i < temp_str_dim; i++)
                     {
-                        for (i = 0; i < temp_str_dim; i++)
-                        {
-                            *(temp_str + i) = *(str + l + i);
-                        }
-                        
-                        head = append(head, convert(temp_str));
+                        *(temp_str + i) = *(str + l + i);
                     }
-                    else
-                    {
-                        printf("[ string_to_list() ] Error: Memory allocation unsuccessful (temp_str)\n");
-                    }
-
-                    r += sep_len;
-                    l = r;
+                    *(temp_str + i) = '\0';
+                    
+                    head = append(head, convert(temp_str));
                 }
                 else
                 {
-                    r++;
+                    printf("[ string_to_list() ] Error: Memory allocation unsuccessful (temp_str)\n");
                 }
+
+                r += sep_len;
+                l = r;
             }
             else
             {
@@ -643,11 +636,11 @@ int ascii_to_int(char *str)
     int digits, i;
     int val;
 
-
-    res = -1;
     
     if (str)
     {
+        res = 0;
+
         for (digits = 0; *(str + digits) != '\0'; digits++)
             ;
 
@@ -659,6 +652,10 @@ int ascii_to_int(char *str)
             res += val * pow(10, i);
             i--;
         }
+    }
+    else
+    {
+        res = -1;
     }
 
     return res;
@@ -674,11 +671,11 @@ long int ascii_to_long_int(char *str)
     int digits, i;
     int val;
 
-
-    res = -1;
     
     if (str)
     {
+        res = 0;
+
         for (digits = 0; *(str + digits) != '\0'; digits++)
             ;
 
@@ -690,6 +687,10 @@ long int ascii_to_long_int(char *str)
             res += val * pow(10, i);
             i--;
         }
+    }
+    else
+    {
+        res = -1;
     }
 
     return res;
@@ -706,10 +707,10 @@ float ascii_to_float(char *str)
     int i, j, val;
 
 
-    res = -1;
-
     if (str)
     {
+        res = 0;
+
         /* 
          * Adding the number that is LEFT of the decimal point
          */
@@ -728,10 +729,12 @@ float ascii_to_float(char *str)
         /* 
          * Adding the number that is RIGHT of the decimal point
          */
+
         for (right_digits = 0; *(str + left_digits + right_digits) != '\0'; right_digits++)
             ;
 
         j = 1;
+        right_digits--;
 
         while (j <= right_digits)
         {
@@ -739,6 +742,10 @@ float ascii_to_float(char *str)
             res += val * pow(10, (-j) );
             j++;
         }
+    }
+    else
+    {
+        res = -1;
     }
 
     return res;
@@ -755,10 +762,10 @@ double ascii_to_double(char *str)
     int i, j, val;
 
 
-    res = -1;
-
     if (str)
     {
+        res = 0;
+        
         /* 
          * Adding the number that is LEFT of the decimal point
          */
@@ -781,6 +788,7 @@ double ascii_to_double(char *str)
             ;
 
         j = 1;
+        right_digits--;
 
         while (j <= right_digits)
         {
@@ -788,6 +796,10 @@ double ascii_to_double(char *str)
             res += val * pow(10, (-j) );
             j++;
         }
+    }
+    else
+    {
+        res = -1;
     }
 
     return res;
@@ -804,10 +816,10 @@ long double ascii_to_long_double(char *str)
     int i, j, val;
 
 
-    res = -1;
-
     if (str)
     {
+        res = 0;
+
         /* 
          * Adding the number that is LEFT of the decimal point
          */
@@ -830,6 +842,7 @@ long double ascii_to_long_double(char *str)
             ;
 
         j = 1;
+        right_digits--;
 
         while (j <= right_digits)
         {
@@ -837,6 +850,10 @@ long double ascii_to_long_double(char *str)
             res += val * pow(10, (-j) );
             j++;
         }
+    }
+    else
+    {
+        res = -1;
     }
 
     return res;
