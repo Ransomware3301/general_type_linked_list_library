@@ -44,16 +44,13 @@ void output_list(list_t *head)
         {
             for (ptr = head; ptr != NULL && ptr->next != NULL; ptr = ptr->next)
             {
-                /* printf("%d -> ", ptr->val); */
                 printf(str_concat(FORMAT, " -> "), ptr->val);
             }
             printf(str_concat(FORMAT, "\n\n"), ptr->val);
-            /* printf("%d\n\n", ptr->val); */
         }   
         else
         {
             printf(str_concat(FORMAT, "\n\n"), head->val);
-            /* printf("%d\n\n", head->val); */
         }
     }
     else
@@ -450,6 +447,8 @@ list_t * string_to_list(char *str, char *sep)
                     {
                         *(temp_str + i) = *(str + l + i);
                     }
+                    
+                    /* String terminator at the end of s */
                     *(temp_str + i) = '\0';
                     
                     head = append(head, convert(temp_str));
