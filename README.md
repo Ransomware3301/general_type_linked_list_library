@@ -12,5 +12,4 @@ Currently, the supported data types are:
 - double
 - long double
 <br>
-<br>
 I'm planning to add more data types in the future if there'll be a need for this library.
