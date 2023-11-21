@@ -436,7 +436,7 @@ list_t * string_to_list(char *str, char *sep)
                     {
                         *(temp_str + i) = *(str + l + i);
                     }
-                    
+
                     /* String terminator at the end of s */
                     *(temp_str + i) = '\0';
                     
@@ -545,303 +545,64 @@ char * str_concat(char *str1, char *str2)
  */
 TYPE convert(char *str)
 {
-    if (str)
-    {
-        if (IS_CHAR)
-        {
-            return *(str);
-        }          
-        else if (IS_SHORT_INT)
-        {
-            return ascii_to_short_int(str);
-        }      
-        else if (IS_INT)
-        {
-            return ascii_to_int(str);
-        }          
-        else if (IS_LONG_INT)
-        {
-            return ascii_to_long_int(str);
-        }      
-        else if (IS_FLOAT)
-        {
-            return ascii_to_float(str);
-        }        
-        else if (IS_DOUBLE)
-        {
-            return ascii_to_double(str);
-        }
-        else if (IS_LONG_DOUBLE)
-        {
-            return ascii_to_long_double(str);
-        }
-    }
-
-    return (TYPE) 0;
-}
-
-
-/*
- *  Converts the passed string into its short int value
- */
-short int ascii_to_short_int(char *str)
-{
-    short int res;
-    int digits, i;
-    int val;
+    TYPE res;
+    int left_digits, right_digits;
+    int i, j, val;
 
 
     res = -1;
-    
-    if (str)
-    {
-        for (digits = 0; *(str + digits) != '\0'; digits++)
-            ;
 
-        i = digits - 1;
 
-        while (i >= 0)
+    if (IS_SHORT_INT || IS_INT || IS_LONG_INT)
+    {   
+        if (str)
         {
-            val = *(str + digits - i - 1) - ZERO_CHAR;
-            if (val >= 0 && val <= 9)
+            res = 0;
+
+            for (left_digits = 0; *(str + left_digits) != '\0'; left_digits++)
+                ;
+
+            i = left_digits - 1;
+
+            while (i >= 0)
             {
+                val = *(str + left_digits - i - 1) - ZERO_CHAR;
                 res += val * pow(10, i);
                 i--;
             }
         }
     }
-
-    return res;
-}
-
-
-/*
- *  Converts the passed string into its int value
- */
-int ascii_to_int(char *str)
-{
-    int res;
-    int digits, i;
-    int val;
-
-    
-    if (str)
+    else if (IS_FLOAT || IS_DOUBLE || IS_LONG_DOUBLE)
     {
-        res = 0;
-
-        for (digits = 0; *(str + digits) != '\0'; digits++)
-            ;
-
-        i = digits - 1;
-
-        while (i >= 0)
+        if (str)
         {
-            val = *(str + digits - i - 1) - ZERO_CHAR;
-            res += val * pow(10, i);
-            i--;
+            res = 0;
+
+            for (left_digits = 0; *(str + left_digits) != '.'; left_digits++)
+                ;
+
+            i = left_digits - 1;
+            
+            while (i >= 0)
+            {
+                val = *(str + left_digits - i - 1) - ZERO_CHAR;
+                res += val * pow(10, i);
+                i--;
+            }
+
+            for (right_digits = 0; *(str + left_digits + right_digits) != '\0'; right_digits++)
+                ;
+
+            j = 1;
+            right_digits--;
+
+            while (j <= right_digits)
+            {
+                val = *(str + left_digits + j) - ZERO_CHAR;
+                res += val * pow(10, (-j) );
+                j++;
+            }
         }
-    }
-    else
-    {
-        res = -1;
-    }
-
-    return res;
-}
-
-
-/*
- *  Converts the passed string into its int value
- */
-long int ascii_to_long_int(char *str)
-{
-    long int res;
-    int digits, i;
-    int val;
-
-    
-    if (str)
-    {
-        res = 0;
-
-        for (digits = 0; *(str + digits) != '\0'; digits++)
-            ;
-
-        i = digits - 1;
-
-        while (i >= 0)
-        {
-            val = *(str + digits - i - 1) - ZERO_CHAR;
-            res += val * pow(10, i);
-            i--;
-        }
-    }
-    else
-    {
-        res = -1;
-    }
-
-    return res;
-}
-
-
-/*
- *  Converts the passed string into its float value
- */
-float ascii_to_float(char *str)
-{
-    float res;
-    int left_digits, right_digits;
-    int i, j, val;
-
-
-    if (str)
-    {
-        res = 0;
-
-        /* 
-         * Adding the number that is LEFT of the decimal point
-         */
-        for (left_digits = 0; *(str + left_digits) != '.'; left_digits++)
-            ;
-
-        i = left_digits - 1;
-        
-        while (i >= 0)
-        {
-            val = *(str + left_digits - i - 1) - ZERO_CHAR;
-            res += val * pow(10, i);
-            i--;
-        }
-
-        /* 
-         * Adding the number that is RIGHT of the decimal point
-         */
-
-        for (right_digits = 0; *(str + left_digits + right_digits) != '\0'; right_digits++)
-            ;
-
-        j = 1;
-        right_digits--;
-
-        while (j <= right_digits)
-        {
-            val = *(str + left_digits + j) - ZERO_CHAR;
-            res += val * pow(10, (-j) );
-            j++;
-        }
-    }
-    else
-    {
-        res = -1;
-    }
-
-    return res;
-}
-
-
-/*
- *  Converts the passed string into its double value
- */
-double ascii_to_double(char *str)
-{
-    double res;
-    int left_digits, right_digits;
-    int i, j, val;
-
-
-    if (str)
-    {
-        res = 0;
-        
-        /* 
-         * Adding the number that is LEFT of the decimal point
-         */
-        for (left_digits = 0; *(str + left_digits) != '.'; left_digits++)
-            ;
-
-        i = left_digits - 1;
-        
-        while (i >= 0)
-        {
-            val = *(str + left_digits - i - 1) - ZERO_CHAR;
-            res += val * pow(10, i);
-            i--;
-        }
-
-        /* 
-         * Adding the number that is RIGHT of the decimal point
-         */
-        for (right_digits = 0; *(str + left_digits + right_digits) != '\0'; right_digits++)
-            ;
-
-        j = 1;
-        right_digits--;
-
-        while (j <= right_digits)
-        {
-            val = *(str + left_digits + j) - ZERO_CHAR;
-            res += val * pow(10, (-j) );
-            j++;
-        }
-    }
-    else
-    {
-        res = -1;
-    }
-
-    return res;
-}
-
-
-/*
- *  Converts the passed string into its long double value
- */
-long double ascii_to_long_double(char *str)
-{
-    long double res;
-    int left_digits, right_digits;
-    int i, j, val;
-
-
-    if (str)
-    {
-        res = 0;
-
-        /* 
-         * Adding the number that is LEFT of the decimal point
-         */
-        for (left_digits = 0; *(str + left_digits) != '.'; left_digits++)
-            ;
-
-        i = left_digits - 1;
-        
-        while (i >= 0)
-        {
-            val = *(str + left_digits - i - 1) - ZERO_CHAR;
-            res += val * pow(10, i);
-            i--;
-        }
-
-        /* 
-         * Adding the number that is RIGHT of the decimal point
-         */
-        for (right_digits = 0; *(str + left_digits + right_digits) != '\0'; right_digits++)
-            ;
-
-        j = 1;
-        right_digits--;
-
-        while (j <= right_digits)
-        {
-            val = *(str + left_digits + j) - ZERO_CHAR;
-            res += val * pow(10, (-j) );
-            j++;
-        }
-    }
-    else
-    {
-        res = -1;
     }
 
     return res;
