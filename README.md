@@ -47,7 +47,7 @@ Currently, the library is unable to work with structured data types but only wit
 - double
 - long double
 
-(NOTE: I've written the library in C89 ANSI, thus ``bool`` and others aren't included but should still work at the time of writing, as long as those data types aren't defined through a ``struct``)
+(NOTE: I've written the library in C89 ANSI, thus ``bool`` and others aren't included but should still work for other C versions at the time of writing, as long as those data types aren't defined through a ``struct``)
 
 - - -
 
