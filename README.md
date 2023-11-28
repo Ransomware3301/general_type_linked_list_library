@@ -12,8 +12,8 @@ In order to integrate this library in your code, you must perform the following 
 2.  At the top of your ``main.c`` file, **BEFORE** the ``#include "full_general_type_list_lib.c"`` preprocessor directive, you must specify these two ``#define`` directives: 
 
 ```C
-    #define TYPE    /* your chosen type goes here */
-    #define FORMAT  /* the printf and scanf format */
+#define TYPE    /* your chosen type goes here */
+#define FORMAT  /* the printf and scanf format */
 ```
 
 3.  After you wrote these two directives, you can now put ``#include "full_general_type_list_lib.c"`` and take full advantage of all the functions inside of it.
@@ -24,8 +24,8 @@ In order to integrate this library in your code, you must perform the following 
 - Suppose we want to operate with an _integer_ list. First, we write the two ``#define`` directives, which in this case look like this: 
 
 ```C
-    #define TYPE int
-    #define FORMAT "%d"
+#define TYPE int
+#define FORMAT "%d"
 ```
 
 <br>
