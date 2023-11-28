@@ -16,11 +16,7 @@ In order to integrate this library in your code, you must perform the following 
     #define FORMAT  /* the printf and scanf format */
 ```
 
-
-
-<br>
-
-1.  After you wrote these two directives, you can now put ``#include "full_general_type_list_lib.c"`` and take full advantage of all the functions inside of it.
+3.  After you wrote these two directives, you can now put ``#include "full_general_type_list_lib.c"`` and take full advantage of all the functions inside of it.
 
 <br>
 
