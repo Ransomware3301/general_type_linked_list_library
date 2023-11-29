@@ -94,6 +94,7 @@ bool_t find(list_t*, TYPE);
 bool_t find_Recursive(list_t*, TYPE);
 list_t * remove_duplicates(list_t*);
 list_t * free_list(list_t*);
+list_t * list_concat(list_t*, list_t*);
 list_t * string_to_list(char*, char*);
 
 
@@ -480,6 +481,35 @@ list_t * free_list(list_t *head)
     }
 
     return head;
+}
+
+
+/*
+ *  Joins the two passed lists into a single one
+ */
+list_t * list_concat(list_t *l1, list_t *l2)
+{
+    list_t *res, *ptr;
+
+
+    res = NULL;
+    ptr = l1;
+
+    while (ptr)
+    {
+        res = append(res, ptr->val);
+        ptr = ptr->next;
+    }
+
+    ptr = l2;
+
+    while (ptr)
+    {
+        res = append(res, ptr->val);
+        ptr = ptr->next;
+    }
+
+    return res;
 }
 
 
