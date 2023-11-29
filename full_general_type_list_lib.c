@@ -3,7 +3,7 @@
  *
  *  Made by:    Ransomware3301 (https://www.github.com/ransomware3301)
  *  Date:       28-11-2023
- */ 
+ */
 
 
 /*
@@ -39,7 +39,7 @@
  */
 
 
-#include <stdio.h> 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -65,7 +65,9 @@ typedef enum bool
 	true
 } bool_t;
 
-typedef struct list {
+
+typedef struct list 
+{
 	TYPE val;
 	struct list *next;
 } list_t;
@@ -98,7 +100,6 @@ list_t * string_to_list(char*, char*);
 /* Miscellaneous */
 int list_length(list_t*);
 int list_length_Recursive(list_t*);
-char * str_concat(char*, char*);
 TYPE convert(char *);
 
 
@@ -125,13 +126,13 @@ void output_list(list_t *head)
         {
             for (ptr = head; ptr != NULL && ptr->next != NULL; ptr = ptr->next)
             {
-                printf(str_concat(FORMAT, " -> "), ptr->val);
+                printf(FORMAT" -> ", ptr->val);
             }
-            printf(str_concat(FORMAT, "\n\n"), ptr->val);
+            printf(FORMAT"\n\n", ptr->val);
         }   
         else
         {
-            printf(str_concat(FORMAT, "\n\n"), head->val);
+            printf(FORMAT"\n\n", head->val);
         }
     }
     else
@@ -593,43 +594,6 @@ int list_length_Recursive(list_t *head)
     {
         return 0;
     }
-}
-
-
-/*
- *  Concatenates two strings
- */
-char * str_concat(char *str1, char *str2)
-{
-    int len1, len2;
-    int i;
-    char *s;
-
-
-    len1 = strlen(str1);
-    len2 = strlen(str2);
-
-    if (( s = (char *)malloc(sizeof(char) * (len1 + len2 + 1)) ))
-    {
-        for (i = 0; i < len1; i++)
-        {
-            *(s + i) = *(str1 + i);
-        }
-
-        for (i = 0; i < len2; i++)
-        {
-            *(s + len1 + i) = *(str2 + i);
-        }
-
-        /* String terminator at the end of s */
-        *(s + len1 + len2) = '\0';
-    }
-    else
-    {
-        printf("[ str_concat() ] Error: Memory allocation unsuccesful\n");
-    }
-
-    return s;
 }
 
 
